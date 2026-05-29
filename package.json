@@ -54,6 +54,9 @@
     ],
     "*.{json,md,css,scss,html}": [
       "pnpm exec prettier --write"
+    ],
+    "pnpm-lock.yaml": [
+      "pnpm exec prettier --write"
     ]
   }
 }

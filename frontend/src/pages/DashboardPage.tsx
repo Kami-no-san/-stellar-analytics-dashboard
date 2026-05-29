@@ -7,8 +7,12 @@
  */
 import { TransactionsChart } from "../components/TransactionsChart";
 import { ExportControls } from "../components/ExportControls";
+import { ThemeToggle } from "../components/ThemeToggle";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { statsToArray } from "../utils/exportUtils";
+import { LedgersList } from "../components/LedgersList";
+import { TransactionsList } from "../components/TransactionsList";
+import { useState } from "react";
 
 export function DashboardPage() {
   const { data, loading, error, retry } = useDashboardData();
@@ -39,23 +43,23 @@ export function DashboardPage() {
         <div
           role="alert"
           style={{
-            background: "#fef2f2",
-            border: "1px solid #fca5a5",
+            background: "var(--color-error-bg)",
+            border: "1px solid var(--color-error-border)",
             borderRadius: "12px",
             padding: "20px",
             marginBottom: "16px",
           }}
         >
-          <h2 style={{ margin: "0 0 8px", color: "#dc2626", fontSize: "16px" }}>
+          <h2 style={{ margin: "0 0 8px", color: "var(--color-error)", fontSize: "16px" }}>
             Failed to load dashboard data
           </h2>
-          <p style={{ margin: "0 0 12px", color: "#6b7280", fontSize: "14px" }}>
+          <p style={{ margin: "0 0 12px", color: "var(--color-text-secondary)", fontSize: "14px" }}>
             {error.message}
           </p>
           <button
             onClick={retry}
             style={{
-              background: "#dc2626",
+              background: "var(--color-error)",
               color: "#fff",
               border: "none",
               borderRadius: "8px",
@@ -90,7 +94,7 @@ export function DashboardPage() {
       <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
         <div>
           <h1 style={{ margin: 0 }}>Stellar Analytics Dashboard</h1>
-          <p style={{ margin: "4px 0 0", color: "#6b7280", fontSize: "14px" }}>
+          <p style={{ margin: "4px 0 0", color: "var(--color-text-secondary)", fontSize: "14px" }}>
             Network:{" "}
             <strong style={{ textTransform: "capitalize" }}>{stats.network}</strong>
             {stats.latestLedger !== null && (
@@ -100,6 +104,9 @@ export function DashboardPage() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          {/* Theme toggle */}
+          <ThemeToggle />
+          
           {/* Export controls for dashboard metrics */}
           <ExportControls 
             data={statsToArray(stats)} 
@@ -111,7 +118,7 @@ export function DashboardPage() {
           {loading && (
             <span
               aria-label="Refreshing data"
-              style={{ fontSize: "12px", color: "#9ca3af" }}
+              style={{ fontSize: "12px", color: "var(--color-text-tertiary)" }}
             >
               ↻ Refreshing…
             </span>
@@ -175,8 +182,8 @@ export function DashboardPage() {
         <div
           role="alert"
           style={{
-            background: "#fffbeb",
-            border: "1px solid #fcd34d",
+            background: "var(--color-warning-bg)",
+            border: "1px solid var(--color-warning-border)",
             borderRadius: "8px",
             padding: "10px 16px",
             marginBottom: "16px",
@@ -186,18 +193,18 @@ export function DashboardPage() {
             fontSize: "13px",
           }}
         >
-          <span style={{ color: "#92400e" }}>
+          <span style={{ color: "var(--color-warning-text)" }}>
             Could not refresh data: {error.message}
           </span>
           <button
             onClick={retry}
             style={{
               background: "transparent",
-              border: "1px solid #d97706",
+              border: "1px solid var(--color-warning-border)",
               borderRadius: "6px",
               padding: "4px 10px",
               cursor: "pointer",
-              color: "#92400e",
+              color: "var(--color-warning-text)",
               fontSize: "12px",
             }}
           >
